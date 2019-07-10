@@ -1,0 +1,446 @@
+?# 이 파일에 게임 스크립트를 입력합니다.
+
+# image 문을 사용해 이미지를 정의합니다.
+# image eileen happy = "eileen_happy.png"
+
+# 게임에서 사용할 캐릭터를 정의합니다.
+define j = Character('조슈아', color="#c8ffc8")
+define c1 = Character('회사1', color="#ffffff")
+define c2 = Character('회사2', color="#ffffff")
+define c3 = Character('회사3', color="#ffffff")
+define u = Character("[name]", color="#ffffff")
+define g = Character('g　θ∫†', color="#FF0000")
+image chair = "chair.jpg"
+image bg black = "black.png"
+image bg white = "white.png"
+image logo = "funfunlogo.png"
+image eye1 = "eye1.png"
+image 4chair = "4chairs.jpg"
+image comp1 = "comp_1.png"
+image comp2 = "comp_2.png"
+image comp3 = "comp_3.png"
+image bg env = "env.jpg"
+
+# 여기에서부터 게임이 시작합니다.
+label start:
+
+    scene bg black
+    show logo:
+        xalign .5
+        yalign .5
+    with Dissolve(.5)
+    pause 3
+    hide logo
+    python:
+        name = renpy.input(_("당신의 이름은 무엇입니까?"))
+        name = name.strip() or __("찰스 킴")
+
+    show chair
+    pause 1
+    show eye1:
+        xalign .5
+        yalign 0.15
+    with Dissolve(1)
+
+    jump act1
+label act1:
+    play sound "mp3/JMain_01.ogg"
+    j "{cps=10}반갑습니다. 프리랜서 스토리작가 조슈아입니다.{/cps}"
+    play sound "mp3/JMain_02.ogg"
+    j " {cps=20}기업 관계자분들, 오늘 저를 채용하기 위한 인터뷰 자리에 임해주셔서
+    \n 감사합니다.{/cps}"
+    play sound "mp3/JMain_03.ogg"
+    j "{cps=10}어디 마음껏 자사 어필을 해 보십시오. 각 기업 당 1분 드리겠습니다.{/cps}"
+    hide chair
+    hide eye1
+    show screen zak_love
+
+
+    show 4chair
+    show comp_1:
+        xalign .10
+        yalign 0.15
+    play sound "mp3/C1Main_01.ogg"
+    c1 "저희 기업은 … 꼭 모시고 싶어 … "
+    hide comp_1
+    show comp_2:
+        xalign .5
+        yalign 0.15
+    play sound "mp3/C2Main_01.ogg"
+    c2 "… 입사해주신다면 연봉 100만 골드 약속드릴 수 있습니다!"
+    hide comp_2
+    show comp_3:
+        xalign .9
+        yalign 0.15
+    play sound "mp3/C3Main_01.ogg"
+    c3 "일단 거주하고 계신 곳과 가깝고, 혹시 불편하시면 자택 근무도 고려…"
+    hide comp_3
+    hide 4chair
+    show chair
+    show eye1:
+        xalign .5
+        yalign 0.15
+    play sound "mp3/JMain_04.ogg"
+    j "{cps=10}흠… 감사합니다.{/cps}"
+    play sound "mp3/JMain_05.ogg"
+    j "{cps=10}그럼, 이제 [name]씨 차례입니다. 소개해 보시겠습니까?{/cps}"
+    menu:
+        "아주 거물 납시셨군 그래.":
+
+            jump act1_1
+        "저희는 앞의 세 기업이 말한 모든 걸 보장합니다.":
+
+            jump act1_2
+        "우리의 비전은 나이, 국적을 초월하는 갓겜을 만드는 것입니다.":
+
+            jump act1_3
+
+label act1_1:
+    u "보자보자하니까 우릴 보자기로 보나? 회사가 우습나? 당신 뭐야?"
+    $ zak_love = zak_love - 10
+    play sound "mp3/JMain_06_1.ogg"
+    j "{cps=10} 아… 네? 아까 소개드렸다시피 스토리 작가 조슈아입니다. \n
+    혹시 질문을 잘 못들으셨나요?{/cps}"
+    u "물론 똑똑히 들었고 말고. 됐수다. 소개는 집어 치우쇼."
+    jump act2
+label act1_2:
+    u "복지, 연봉, 그 외 각종 혜택을 전부 제공할 여력이 있습니다."
+    $ zak_love = zak_love + 5
+    play sound "mp3/JMain_06_2.ogg"
+    j "  {cps=10}그럴 여력이 없을 것 같으면 굳이 몇 명만 추려서 여기로 모셨겠습니까?\n
+    별로 인상적이지는 못했습니다.{/cps}"
+    jump act2
+label act1_3:
+    u "기술력은 갖춰져 있습니다. 하지만 부족한 것은.. 바로 스토리텔링 능력.
+    우리는 최고의 작가를 찾고 있고, 그러기 위해 제가 이 자리에 있습니다."
+    $ zak_love = zak_love + 20
+    play sound "mp3/JMain_06_3.ogg"
+    j "{cps=10}저는 최고의 작가는 아닙니다. 하지만 고용주의 역량에 따라 최고가 될 수도,
+    아닐수도 있죠. 다만, 작품에 최선을 다할 뿐.{/cps}"
+    jump act2
+
+label act2:
+    play sound "mp3/JMain_07.ogg"
+    j "{cps=10}뭐, 좋습니다. 기업 관계자 여러분의 얘기, 잘 들었고요.{/cps}"
+    play sound "mp3/JMain_08.ogg"
+    j "{cps=10}그래, 계획하고 계신 장르는 뭡니까? 전략? 던전? 캐주얼?
+    뭐든 말해 보십시오.{/cps}"
+    hide chair
+    hide eye1
+    show 4chair
+    show comp_1:
+        xalign .10
+        yalign 0.15
+    play sound "mp3/C1Main_02.ogg"
+    c1 "당연히 연애 비주얼노벨입니다."
+    play sound "mp3/C1Main_02_2.ogg"
+    c1 "여성향, 그중에서도 BL 소재로 특이 취향유저들을 타겟 삼으려 합니다."
+    hide comp_1
+    show comp_2:
+        xalign .5
+        yalign 0.15
+    play sound "mp3/C2Main_02.ogg"
+    c2 "SF RPG입니다. 중세풍 고전게임부터 스페이스 활극 판타지까지 구현 \n가능합니다."
+    play sound "mp3/C2Main_02_2.ogg"
+    c2 "플레이어블 캐릭터는 초기에는 대략 5명 정도를 구상 중입니다."
+    hide comp_2
+    show comp_3:
+        xalign .9
+        yalign 0.15
+    play sound "mp3/C3Main_02.ogg"
+    c3 "격투입니다. 격투게임에 스토리가 웬말이냐 싶으시겠지만, "
+    play sound "mp3/C3Main_02_2.ogg"
+    c3 "몇 마디 텍스트로 캐릭터성을 화,확실하게 부각시킬 수 있죠."
+    hide comp_3
+    hide 4chair
+    show chair
+    show eye1:
+        xalign .5
+        yalign 0.15
+    play sound "mp3/JMain_09.ogg"
+    j "{cps=10}흠, 괜찮군요. 하지만 뭔가 좀 색다른 걸 원해요.{/cps}"
+    play sound "mp3/JMain_10.ogg"
+    j "{cps=10}[name] 씨는 아까부터 뜸을 자꾸 들이시는데, 원래 그렇게 생각이 많으십니까?
+    \n[name] 씨의 생각은 어떻죠?{/cps}"
+
+    menu:
+        "뭘 하고 싶은지는 우리가 정한다. 당신은 그냥 시키는대로만 해.":
+
+            jump act2_1
+        "아, 저희는 작가님이 구상하고 계신 거라면 충분합니다.":
+
+            jump act2_2
+        "BL 요소가 들어간 SF풍 격투 게임입니다.":
+
+            jump act2_3
+        "운동+육성입니다. 헬스장에서 몸을 단련시키는…":
+
+            jump act2_4
+    label act2_1:
+        u "하찮은 작가 나부랭이주제에. 당신, 게임 개발이 얼만큼 노력을 요하는지는
+        \n 아나?"
+        u "되도않는 변덕부리는 작가 한 명 때문에 프로젝트를 몽땅 뒤엎은 적이 있다.
+        \n당신 딱 그 느낌인데."
+        $ zak_love = zak_love - 10
+        play sound "mp3/JMain_11_1.ogg"
+        j "{cps=10}[name] 씨와는 정말 대화가 통하지 않네요. 별로 멋있지 않았고,
+        설득되지도 \n않았습니다.{/cps}"
+        jump act3
+    label act2_2:
+        $ zak_love = zak_love - 5
+        play sound "mp3/JMain_11_2.ogg"
+        j "{cps=10}저, 그러니까 뭘 하면 좋을지 같이 토론해보자는 건데.
+        너무 저자세 아닌가요? \n아니, 혹시 준비를 하지 않으신 건가?{/cps}"
+        jump act3
+    label act2_3:
+        $ zak_love = zak_love + 0
+        play sound "mp3/JMain_11_3.ogg"
+        j "{cps=10}그럴듯한 재료를 몽땅 다 합친다고 그게 요리가 됩니까?
+        스토리 작가가 얼마나 당황스러울지 생각은 해보셨습니까?
+        너무 성의가 없는 거 아닙니까?{/cps}"
+        jump act3
+    label act2_4:
+        u "스토리는 헬스장에서 벌어지는 다양한 사건들을 다루죠.
+        BL도 실험삼아 섞을 수 있겠고…"
+        u "격투? 라기보다는 경쟁 콘텐츠도 가능하고요.
+        SF랑은 별로 관련이 없을 수도 \n있겠군요. 현실적이니까."
+        $ zak_love = zak_love + 30
+        play sound "mp3/JMain_11_4.ogg"
+        j "{cps=10}뭔가 참신한데요. 마침 요즘 트렌드도 자기관리, 운동이니까.
+        생각해본 적 \n없었는데, 굉장히 흥미로운데요?{/cps}"
+        jump act3
+
+label act3:
+    play sound "mp3/JMain_12.ogg"
+    j "{cps=10}일단 잘 들었습니다.{/cps}"
+    play sound "mp3/JMain_13.ogg"
+    j "{cps=10}다음은 예상 제작기간과 향후 계획을 듣고 싶습니다.
+    먼저 말씀하실 분?{/cps}"
+    hide chair
+    hide eye1
+    show 4chair
+    show comp_1:
+        xalign .10
+        yalign 0.15
+    play sound "mp3/C1Main_03.ogg"
+    c1 "음, 그렇게까지 오래 잡고 있진 않습니다. 1년 안에는 완성을 고려하고 있습니다. 계획은-"
+    hide comp_1
+    show comp_2:
+        xalign .5
+        yalign 0.15
+    play sound "mp3/C2Main_03.ogg"
+    c2 "완성까지 최소 5년. 온라인RPG이기 때문에, 흥행 추이에 따라 더 늘어날 수
+    있습니다. 계획은-"
+    hide comp_2
+    show comp_3:
+        xalign .9
+        yalign 0.15
+    play sound "mp3/C3Main_03.ogg"
+    c3 "구체적으로는 저희 팀과 더 논의를 해야 하겠죠. 저희가 마련한 기간은
+    대략 3년입니다. 계획은? "
+    hide comp_3
+    hide 4chair
+    show chair
+    show eye1:
+        xalign .5
+        yalign 0.15
+    play sound "mp3/JMain_14.ogg"
+    j "{cps=10}감사합니다. 마지막으로 [name] 씨가 생각하시는 제작 기간과 향후 계획은
+    \n어떻습니까?{/cps}"
+    menu:
+        "흥, 대화가 안 통하는 사람한테 무얼 더 기대하나?":
+
+            jump act3_1
+        "그 질문은 여기서는 답해드리기 곤란합니다. 사내 비밀인지라...":
+
+            jump act3_2
+        "6개월 내 론칭. 3개월 내 프로토타입 제작. 조정 가능합니다.":
+
+            jump act3_3
+    label act3_1:
+        u "태도가 글러먹었어. 나는 당신이 정말 마음에 안 들어.
+        하지만… 잘못했다고 먼저 말하면 너그러이 용서해 주지."
+        $ zak_love = zak_love - 10
+        play sound "mp3/JMain_15_1.ogg"
+        j "{cps=10}삐지셨군요. 저도 더이상 할말은 없습니다. 슬슬 [name]씨가 원숭이로
+        보이기 시작하는군요.{/cps}"
+        jump act4
+    label act3_2:
+        u "이따가 면접이 끝나면 개별적으로 연락드리겠습니다."
+        $ zak_love = zak_love - 5
+        play sound "mp3/JMain_15_2.ogg"
+        j "{cps=10}여기까지 와서 눈치 볼게 뭐 있습니까? 게다가 그렇게 나오시면
+        먼저 말한 \n나머지 세 회사는 뭐가 됩니까? 비겁하군요.
+        그건 제가 원하던 그림이 아닙니다.{/cps}"
+        jump act4
+    label act3_3:
+        u "글로벌 론칭까지 고려 중이니 스토리 제작에 이점 참고해 주셨으면 합니다.
+        \n관련 계획을 계획을 간단히 말씀드리면-"
+        $ zak_love = zak_love + 0
+        play sound "mp3/JMain_15_3.ogg"
+        j "{cps=10}야망이 큰 분은 싫어하지 않습니다. 하지만 데드라인을
+        너무 짧게 잡으신 것 \n아닌가요? 뭐, 일단 알겠습니다.{/cps}"
+        jump act4
+
+label act4:
+    play sound "mp3/JMain_16.ogg"
+    j "{cps=10}그럼 슬슬 오늘 인터뷰를 마치려고 하는데요. 각 기업 관계자 여러분들은
+    끝으로 하실 말씀이 있으신가요?{/cps}"
+    hide chair
+    hide eye1
+    show 4chair
+    show comp_1:
+        xalign .10
+        yalign 0.15
+    play sound "mp3/C1Main_04.ogg"
+    c1 "{cps=10}여러 기업이 구상 중인 다양한 사업들을 접하면서 저까지 들떠버렸네요.{/cps}"
+    play sound "mp3/C1Main_04_2.ogg"
+    c2 "{cps=10}저희 x사는 조슈아님과의 동행을 진심으로 환영합니다.{/cps}"
+    hide comp_1
+    show comp_2:
+        xalign .5
+        yalign 0.15
+    play sound "mp3/C2Main_04.ogg"
+    c2 "{cps=10}듣던 것 이상으로 인상적인 분이시군요. 어떤 게임을 맡더라도 충분히 소화하실
+    재량이 있어보이십니다.{/cps}"
+    play sound "mp3/C2Main_04_2.ogg"
+    c2 "{cps=10}저희 o사는 완벽한 복지로 조슈아님의 창작활동을 서포트하겠습니다.{/cps}"
+    hide comp_2
+    show comp_3:
+        xalign .9
+        yalign 0.15
+    play sound "mp3/C3Main_04.ogg"
+    c3 "{cps=10}복지는 저희 y사도 지지 않습니다. 다만 우리는 가족 같은 분위기가
+    특색이죠.{/cps}"
+    play sound "mp3/C3Main_04_2.ogg"
+    c3 "{cps=10}함께 일하는 게 너무 재미있어서 새벽까지 시간 가는 줄도 모를 거예요.{/cps}"
+    hide comp_3
+    hide 4chair
+    show chair
+    show eye1:
+        xalign .5
+        yalign 0.15
+    play sound "mp3/JMain_17.ogg"
+    j "{cps=10}감사합니다. [name]께서는 끝으로 하실 말씀이라도?{/cps}"
+
+    menu:
+        "지루해 죽는 줄 알았군. 자, N사 명함이다.":
+
+            jump act4_1
+        "대화를 나눠보니 능력있고 젊은 야심가라는 생각이 들었습니다.":
+
+            jump act4_2
+        "설령 오늘 결과가 좋지 못해도, 결코 포기하지 않겠습니다.":
+
+            jump act4_3
+        " ":
+            jump act4_4_2
+    label act4_1:
+        u "오늘 당신, 썩 맘에 들진 않았어. 그래도 정 원한다면 구경은 와 보라고.
+        \n차비는 없어."
+        $ zak_love = zak_love - 10
+        play sound "mp3/JMain_18_1.ogg"
+        j "{cps=10}우끽? 꿀꿀?? 죄송합니다. 전혀 이해하지 못했습니다..{/cps}"
+        jump finale
+    label act4_2:
+        u "저희는 3년차 스타트업, 야심 충만한 멤버들로 구성되어 있죠.
+        저희 회사로 \n오신다면 긍정적인 시너지효과가 일어날 겁니다."
+        $ zak_love = zak_love + 0
+        play sound "mp3/JMain_18_2.ogg"
+        j "{cps=10}뭐, 무난하군요.{/cps}"
+        jump finale
+    label act4_3:
+        u "몇 번이고 찾아 뵙겠습니다. 삼고초려 아시죠? 우리들은 끈기있게
+        당신의 연락을 기다릴 겁니다."
+        $ zak_love = zak_love - 5
+        play sound "mp3/JMain_18_3_1.ogg"
+        j "{cps=10}그건 별로 좋지 못한 방법이군요.{/cps}"
+        play sound "mp3/JMain_18_3_2.ogg"
+        j "{cps=10}저라면 한 번 찾아온 찬스에 온 마음을 다하겠습니다.
+        \n그야, 똑같은 기회가 정말로 세 번씩이나
+        찾아오지는 않잖아요.{/cps}"
+        jump finale
+
+    label act4_4_2:
+        j "감사합니다. 당신께서는 끝으로 하실 말씀이라도?"
+        menu:
+            "지루해 죽는 줄 알았군. 자, N사 명함이다.":
+
+                jump act4_1
+            "대화를 나눠보니 능력있고 젊은 야심가라는 생각이 들었습니다.":
+
+                jump act4_2
+            "설령 오늘 결과가 좋지 못해도, 결코 포기하지 않겠습니다.":
+
+                jump act4_3
+            " ":
+                jump act4_4_3
+
+    label act4_4_3:
+        "주저??하,고."
+        "......"
+        "..."
+        "<0Π+1Π∪∃¿"
+        menu:
+            "STOP":
+                jump finale
+            "N??":
+                jump act4_0
+    label act4_0:
+        g "NF-4"
+        hide screen zak_love
+        play sound "mp3/JMain_18_4_1.ogg"
+        j "{cps=10}뭐…뭐라고? 당신 지금 NF-4라고… 그게 사실입니까?{/cps}"
+        play sound "mp3/JMain_18_4_2.ogg"
+        j "{cps=10}잠깐, 잠시만 자리를 좀 비우겠습니다.{/cps}"
+        play sound "mp3/JMain_18_4_3.ogg"
+        j "{cps=10}확인 끝났습니다. 정말인가보군요.{/cps}"
+        jump secret
+
+label finale:
+    play sound "mp3/JMain_19.ogg"
+    j "{cps=10}여러분 모두 수고 많으셨습니다. 오늘 면접은 이것으로 마치겠습니다.{/cps}"
+    hide screen zak_love
+    if zak_love > 0:
+        jump happyend
+    else :
+        jump badend
+label secret:
+    play sound "mp3/JMain_19_2.ogg"
+    j "{cps=10}오늘 면접은 이것으로 마치겠습니다{/cps}"
+    hide chair
+    hide eye1
+    scene bg black
+
+    "<일 주일 후>"
+    show env2
+    "이것은 조슈아님에게서 온 편지입니다."
+    "편지를 열었습니다."
+    play sound "mp3/ef_door.mp3"
+    "조슈아님이 {color=#FF0000}g　θ∫†{/color}의 회사를 선택했습니다.
+    {i}추신 : NF-4에 대한 구체적인 논의.{/i}
+    \n\nSecret End"
+return
+
+label happyend:
+    scene bg white
+    "<일 주일 후>"
+    show env
+    "이것은 조슈아님에게서 온 편지입니다."
+    "[name]은(는) 편지를 열었습니다."
+    play sound "mp3/ef_congratulation.mp3"
+    "축하합니다! 조슈아님이 [name]의 회사를 선택했습니다. \n\nHappy End"
+
+return
+
+label badend:
+    scene bg white
+
+    "<일 주일 후>"
+    show env
+
+    "[name]은(는) 편지를 열었습니다."
+    play sound "mp3/ef_frustrated.wav"
+    "아쉽게 되었습니다! 꽝! 다음 기회에. \n\nBad End"
+
+return
